@@ -4,10 +4,20 @@ import random
 def generate_color():
     return f"#{random.randint(0, 0xFFFFFF):06x}"
 
+def create_turtle():
+    new_turtle = Turtle()
+    new_turtle.shape("circle")
+    new_turtle.pu()
+    new_turtle.speed(0)
+    new_turtle.setheading( random.randint(0, 360))
+    new_turtle.color(generate_color())
+    
+    return new_turtle
+
 def play_area():
     pen =Turtle()
     pen.speed(0)
-    pen.ht
+    pen.hideturtle()
     pen.color(generate_color())
     pen.goto(-250,250)
     pen.begin_fill()
@@ -19,19 +29,26 @@ def play_area():
         
     pen.end_fill()
 
-def move_forward(turtle):
+def move_forward(turtle, turtles):
     turtle.forward(5)
 
     if turtle.xcor() > 245 or turtle.xcor() < -245:
         turtle.speed(0)
+        print(turtle.heading())
         turtle.setheading(180 - turtle.heading())
         turtle.forward(10)
         turtle.speed(1)
+        t = create_turtle()
+        turtles.append(t)
     if turtle.ycor() > 245 or turtle.ycor() < -245:
         turtle.speed(0)
         turtle.setheading(-turtle.heading() )
         turtle.forward(10)
         turtle.speed(1)
+        t = create_turtle()
+        turtles.append(t)
+    
+    return turtles
 
 def move_xy(turtle, deltaX, deltaY):
     newX = turtle.xcor() + deltaX
@@ -53,14 +70,18 @@ play_area()
 
 yertle = Turtle()
 yertle.color(generate_color())
-yertle.shape("turtle")
+yertle.shape("circle")
+yertle.pu()
 yertle.setheading( random.randint(0,360) )
 deltaX = random.randint(-5,5)
 deltaY = random.randint(-5,5)
 
+turtles = [yertle]
+
 
 while True:
-    deltaX, deltaY = move_xy(yertle, deltaX, deltaY)
+    for obj in turtles:
+        turtles = move_forward(obj, turtles)
 
 
 
