@@ -71,21 +71,13 @@ def create_player():
     player.shape('square')
     player.color('white')
 
-def up():
-    global player
-    player.sety(player.ycor()+5)
-
-def down():
-    global player
-    player.sety(player.ycor()-5)
-
 def left():
     global player
-    player.setx(player.xcor()-5)
+    player.left(10)
 
 def right():
     global player
-    player.setx(player.xcor()+5)
+    player.right(10)
 
 
 
@@ -96,8 +88,6 @@ play_area()
 
 screen.listen()
 screen.onkeypress(create_player, 'space')
-screen.onkeypress(up, "Up")
-screen.onkeypress(down, "Down")
 screen.onkeypress(right, "Right")
 screen.onkeypress(left, "Left")
 
@@ -114,6 +104,8 @@ player = None
 turtles = [yertle]
 
 while True:
+    if player != None:
+        turtles = move_forward(player, turtles)
     for obj in turtles:
         turtles = move_forward(obj, turtles)
         if player != None and player.distance(obj) < 20:
